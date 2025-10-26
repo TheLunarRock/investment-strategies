@@ -1,0 +1,52 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# 🔒 設定ファイル保護チェック（品質維持のため必須）
+echo "🔒 設定ファイル整合性チェック..."
+node scripts/protect-config.js || {
+  echo "❌ 設定ファイルの不正な変更を検出しました！"
+  echo "設定を元に戻してから再度コミットしてください。"
+  exit 1
+}
+
+# 🛡️ 複数フィーチャーの同時変更を検出（エラーループ防止）
+echo "🔍 単一フィーチャーチェック..."
+CHANGED_FEATURES=$(git diff --cached --name-only | grep '^src/features/' | cut -d'/' -f3 | sort -u)
+FEATURE_COUNT=$(echo "$CHANGED_FEATURES" | grep -v '^$' | wc -l)
+
+if [ "$FEATURE_COUNT" -gt 1 ]; then
+  echo "❌ エラー: 複数フィーチャーの同時変更を検出しました"
+  echo "変更されたフィーチャー:"
+  echo "$CHANGED_FEATURES" | sed 's/^/  - /'
+  echo ""
+  echo "📝 対処法："
+  echo "1. フィーチャーごとに分けてコミットしてください"
+  echo "   例: git add src/features/user/"
+  echo "       git commit -m \"fix: user feature\""
+  echo ""
+  echo "2. Claude Codeに指示："
+  echo "   「userフィーチャーだけコミットして」"
+  echo ""
+  exit 1
+fi
+
+# 🔴 Critical: 境界違反チェック（フィーチャー開発必須）
+echo "🔍 フィーチャー境界チェック..."
+pnpm check:boundaries || {
+  echo "❌ 境界違反が検出されました！"
+  echo "修正してから再度コミットしてください。"
+  exit 1
+}
+
+# 🔴 Critical: 品質チェック
+echo "🔍 ESLint & TypeScript チェック..."
+npx lint-staged
+
+# 🔴 Critical: テスト実行
+echo "🧪 テスト実行..."
+pnpm test:unit || {
+  echo "❌ テストが失敗しました！"
+  exit 1
+}
+
+echo "✅ 全てのチェックが完了しました！"

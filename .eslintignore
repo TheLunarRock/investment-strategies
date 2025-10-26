@@ -1,0 +1,10 @@
+node_modules/
+.next/
+.out/
+dist/
+build/
+coverage/
+*.config.js
+next-env.d.ts
+scripts/
+next-i18next.config.js

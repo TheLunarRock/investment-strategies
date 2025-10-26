@@ -1,0 +1,57 @@
+{
+  "extends": [
+    "next/core-web-vitals",
+    "@typescript-eslint/recommended"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint", "sonarjs", "security"],
+  "rules": {
+    "react/display-name": "off",
+    
+    // 🟢 現実的100%: any型禁止（設定ファイル除く）
+    "@typescript-eslint/no-explicit-any": "error",
+    "@typescript-eslint/no-unsafe-assignment": "warn",
+    "@typescript-eslint/no-unsafe-member-access": "warn",
+    "@typescript-eslint/no-unsafe-call": "warn",
+    "@typescript-eslint/no-unsafe-return": "warn",
+    
+    // 🟢 現実的100%: 型安全（過度でない）
+    "@typescript-eslint/no-non-null-assertion": "warn",
+    "@typescript-eslint/prefer-nullish-coalescing": "error",
+    "@typescript-eslint/prefer-optional-chain": "error",
+    
+    // 🟢 現実的100%: デバッグコード禁止
+    "no-console": "error",
+    "no-debugger": "error",
+    
+    // 🟢 現実的100%: React品質
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
+    
+    // 🟢 現実的100%: 複雑性制御（実用的レベル）
+    "sonarjs/cognitive-complexity": ["error", 15],
+    "sonarjs/no-duplicate-string": ["error", 5],
+    "sonarjs/no-duplicated-branches": "error",
+    "sonarjs/no-identical-expressions": "error",
+    
+    // 🟢 現実的100%: セキュリティ（重要なもの）
+    "security/detect-object-injection": "warn",
+    "security/detect-unsafe-regex": "error",
+    "security/detect-buffer-noassert": "error"
+  },
+  "overrides": [
+    {
+      "files": ["*.config.*", "tailwind.config.ts", "scripts/**/*"],
+      "rules": {
+        "@typescript-eslint/no-explicit-any": "off",
+        "sonarjs/cognitive-complexity": "off"
+      }
+    },
+    {
+      "files": ["**/*.test.*", "tests/**/*"],
+      "rules": {
+        "sonarjs/no-duplicate-string": "off"
+      }
+    }
+  ]
+}

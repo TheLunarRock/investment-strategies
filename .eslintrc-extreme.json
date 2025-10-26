@@ -1,0 +1,76 @@
+{
+  "extends": [
+    "next/core-web-vitals",
+    "@typescript-eslint/recommended",
+    "@typescript-eslint/recommended-requiring-type-checking"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
+  "plugins": ["@typescript-eslint", "sonarjs", "security", "import"],
+  "rules": {
+    "react/display-name": "off",
+    
+    // 🔴 100%品質: any型を完全根絶
+    "@typescript-eslint/no-explicit-any": "error",
+    "@typescript-eslint/no-unsafe-assignment": "error",
+    "@typescript-eslint/no-unsafe-member-access": "error",
+    "@typescript-eslint/no-unsafe-call": "error",
+    "@typescript-eslint/no-unsafe-return": "error",
+    "@typescript-eslint/no-unsafe-argument": "error",
+    
+    // 🔴 100%品質: 完全型安全
+    "@typescript-eslint/no-non-null-assertion": "error",
+    "@typescript-eslint/strict-boolean-expressions": "error",
+    "@typescript-eslint/prefer-nullish-coalescing": "error",
+    "@typescript-eslint/prefer-optional-chain": "error",
+    "@typescript-eslint/no-unnecessary-condition": "error",
+    "@typescript-eslint/no-unnecessary-type-assertion": "error",
+    
+    // 🔴 100%品質: デバッグコード完全禁止
+    "no-console": "error",
+    "no-debugger": "error",
+    "no-alert": "error",
+    
+    // 🔴 100%品質: 完璧なReact
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "error",
+    
+    // 🔴 100%品質: 複雑性を極限まで制御
+    "sonarjs/cognitive-complexity": ["error", 5],
+    "sonarjs/no-duplicate-string": ["error", 2],
+    "sonarjs/no-duplicated-branches": "error",
+    "sonarjs/no-identical-expressions": "error",
+    "sonarjs/prefer-immediate-return": "error",
+    
+    // 🔴 100%品質: セキュリティ完璧
+    "security/detect-object-injection": "error",
+    "security/detect-non-literal-regexp": "error",
+    "security/detect-unsafe-regex": "error",
+    "security/detect-buffer-noassert": "error",
+    "security/detect-child-process": "error",
+    "security/detect-disable-mustache-escape": "error",
+    "security/detect-eval-with-expression": "error",
+    "security/detect-no-csrf-before-method-override": "error",
+    "security/detect-non-literal-fs-filename": "error",
+    "security/detect-non-literal-require": "error",
+    "security/detect-possible-timing-attacks": "error",
+    "security/detect-pseudoRandomBytes": "error",
+    
+    // 🔴 100%品質: import完璧性
+    "import/no-unresolved": "error",
+    "import/no-self-import": "error",
+    "import/no-cycle": "error",
+    "import/no-useless-path-segments": "error",
+    "import/consistent-type-specifier-style": "error"
+  },
+  "overrides": [
+    {
+      "files": ["*.config.*", "tailwind.config.ts"],
+      "rules": {
+        "@typescript-eslint/no-explicit-any": "off"
+      }
+    }
+  ]
+}

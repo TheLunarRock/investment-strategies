@@ -1,0 +1,13 @@
+# Auto detect text files and perform LF normalization
+* text=auto
+
+# Linguist overrides - TypeScript as primary language
+*.js linguist-detectable=false
+*.mjs linguist-detectable=false
+scripts/* linguist-detectable=false
+*.ts linguist-detectable=true
+*.tsx linguist-detectable=true
+
+# Mark TypeScript as primary language
+*.ts linguist-language=TypeScript
+*.tsx linguist-language=TypeScript

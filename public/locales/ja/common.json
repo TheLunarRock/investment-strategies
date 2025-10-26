@@ -1,0 +1,38 @@
+{
+  "app": {
+    "name": "Template v3.0",
+    "description": "次世代Webアプリケーションテンプレート"
+  },
+  "navigation": {
+    "home": "ホーム",
+    "about": "概要",
+    "features": "機能",
+    "contact": "お問い合わせ"
+  },
+  "actions": {
+    "submit": "送信",
+    "cancel": "キャンセル",
+    "save": "保存",
+    "delete": "削除",
+    "edit": "編集",
+    "close": "閉じる",
+    "search": "検索",
+    "filter": "フィルター",
+    "sort": "並び替え",
+    "refresh": "更新"
+  },
+  "status": {
+    "loading": "読み込み中...",
+    "success": "成功しました",
+    "error": "エラーが発生しました",
+    "warning": "警告",
+    "info": "情報"
+  },
+  "validation": {
+    "required": "必須項目です",
+    "email": "有効なメールアドレスを入力してください",
+    "min": "{{min}}文字以上入力してください",
+    "max": "{{max}}文字以下で入力してください",
+    "pattern": "正しい形式で入力してください"
+  }
+}

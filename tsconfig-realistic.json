@@ -1,0 +1,44 @@
+{
+  "compilerOptions": {
+    "target": "es2020",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": false,
+    "skipLibCheck": true,
+    
+    // 🟢 現実的100%: 厳格だが実用的
+    "strict": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    
+    // 🟢 現実的100%: 未使用コード（警告レベル）
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    
+    // 🟡 調整済み: 過度に厳格な設定は無効化
+    "noUncheckedIndexedAccess": false,
+    "exactOptionalPropertyTypes": false,
+    
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "paths": {
+      "@/*": ["./src/*"],
+      "@features/*": ["./src/features/*"]
+    }
+  },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "exclude": ["node_modules"]
+}

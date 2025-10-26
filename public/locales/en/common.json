@@ -1,0 +1,38 @@
+{
+  "app": {
+    "name": "Template v3.0",
+    "description": "Next Generation Web Application Template"
+  },
+  "navigation": {
+    "home": "Home",
+    "about": "About",
+    "features": "Features",
+    "contact": "Contact"
+  },
+  "actions": {
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "close": "Close",
+    "search": "Search",
+    "filter": "Filter",
+    "sort": "Sort",
+    "refresh": "Refresh"
+  },
+  "status": {
+    "loading": "Loading...",
+    "success": "Success",
+    "error": "An error occurred",
+    "warning": "Warning",
+    "info": "Information"
+  },
+  "validation": {
+    "required": "This field is required",
+    "email": "Please enter a valid email address",
+    "min": "Please enter at least {{min}} characters",
+    "max": "Please enter no more than {{max}} characters",
+    "pattern": "Please enter in the correct format"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "protectedFeatures": [
+    {
+      "name": "example-feature",
+      "description": "重要な機能の例",
+      "paths": ["src/features/example/", "src/app/example/"],
+      "protection": "strict",
+      "reason": "この機能は本番環境で稼働中のため、変更には注意が必要です",
+      "protectedAt": "2024-01-01T00:00:00Z",
+      "allowFlags": ["--allow-example-changes"]
+    }
+  ],
+  "globalSettings": {
+    "strictMode": false,
+    "logChanges": true,
+    "requireExplicitApproval": false,
+    "emergencyBypass": "--emergency-override",
+    "adminContact": "開発チーム"
+  },
+  "metadata": {
+    "version": "1.0.0",
+    "lastUpdated": "2024-01-01T00:00:00Z",
+    "totalProtectedFeatures": 0,
+    "totalProtectedPaths": 0
+  }
+}

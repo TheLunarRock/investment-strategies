@@ -1,0 +1,20 @@
+{
+  "scripts": {
+    "quality:100": "cp .eslintrc-extreme.json .eslintrc.json && cp tsconfig-extreme.json tsconfig.json",
+    "quality:restore": "git checkout -- .eslintrc.json tsconfig.json",
+    
+    "test:100": "vitest --coverage --reporter=verbose --bail=1",
+    "test:mutation": "stryker run",
+    "test:property": "fast-check",
+    
+    "validate:100": "pnpm quality:100 && pnpm check:boundaries && pnpm typecheck && pnpm test:100 && pnpm test:e2e && echo '🎯 100%品質達成!'",
+    
+    "claude:100": "echo '🤖 Claude Code専用100%品質モード' && pnpm validate:100"
+  },
+  "devDependencies": {
+    "@stryker-mutator/core": "^7.3.0",
+    "@stryker-mutator/vitest-runner": "^7.3.0",
+    "fast-check": "^3.15.0",
+    "eslint-plugin-import": "^2.29.1"
+  }
+}

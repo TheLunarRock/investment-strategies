@@ -1,0 +1,30 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# コミットメッセージを取得
+commit_message=$(cat "$1")
+
+# フィーチャー名を自動検出
+CHANGED_FEATURES=$(git diff --cached --name-only | grep '^src/features/' | cut -d'/' -f3 | sort -u | head -1)
+
+# コミットメッセージのフォーマットチェック
+# 許可される形式: feat: fix: chore: docs: style: refactor: test: perf:
+if ! echo "$commit_message" | grep -qE "^(feat|fix|chore|docs|style|refactor|test|perf)(\([^)]+\))?: .+"; then
+  echo "❌ コミットメッセージの形式が正しくありません"
+  echo ""
+  echo "正しい形式:"
+  echo "  feat: 新機能の追加"
+  echo "  fix: バグ修正"
+  echo "  chore: ビルドやツールの変更"
+  echo "  docs: ドキュメントの更新"
+  echo ""
+  if [ -n "$CHANGED_FEATURES" ]; then
+    echo "💡 推奨フォーマット:"
+    echo "  feat($CHANGED_FEATURES): 機能の説明"
+    echo "  fix($CHANGED_FEATURES): 修正内容の説明"
+  fi
+  echo ""
+  exit 1
+fi
+
+echo "✅ コミットメッセージの形式: OK"

@@ -1,0 +1,138 @@
+{
+  "extends": [
+    "next/core-web-vitals",
+    "plugin:@typescript-eslint/recommended",
+    "./.eslintrc-features.js"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
+  "plugins": ["@typescript-eslint", "sonarjs", "security", "react-hooks"],
+  "rules": {
+    "react/display-name": "off",
+
+    // 🔴 セキュリティ: 危険な実行を防止
+    "no-eval": "error",
+    "no-implied-eval": "error",
+    "no-new-func": "error",
+
+    // 🔴 97%品質: any型を完全根絶
+    "@typescript-eslint/no-explicit-any": "error",
+    "@typescript-eslint/no-unsafe-assignment": "warn",
+    "@typescript-eslint/no-unsafe-member-access": "warn",
+    "@typescript-eslint/no-unsafe-call": "warn",
+    "@typescript-eslint/no-unsafe-return": "warn",
+    "@typescript-eslint/no-unsafe-argument": "warn",
+
+    // 🔴 97%品質: 実用的型安全
+    "@typescript-eslint/no-non-null-assertion": "error",
+    "@typescript-eslint/prefer-nullish-coalescing": "error",
+    "@typescript-eslint/prefer-optional-chain": "error",
+    "@typescript-eslint/no-unnecessary-condition": "warn",
+
+    // 🔴 97%品質: デバッグコード完全禁止
+    "no-console": "error",
+    "no-debugger": "error",
+
+    // 🔴 97%品質: 完璧なReact
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "error",
+
+    // 🔥 無限ループ防止ルール（強化版）
+    "no-restricted-syntax": [
+      "error",
+      {
+        "selector": "CallExpression[callee.name='useEffect'] > ArrowFunctionExpression > CallExpression[callee.property.name=/^set[A-Z]/]",
+        "message": "⚠️ 無限ループの危険: useEffect内でのsetState呼び出しは慎重に。条件分岐を追加してください。"
+      },
+      {
+        "selector": "CallExpression[callee.name='useEffect'] ArrayExpression > ObjectExpression",
+        "message": "🔥 無限ループ確実: 依存配列にオブジェクトリテラル使用禁止！ useMemo(() => ({...}), [依存値]) を使用してください。"
+      },
+      {
+        "selector": "CallExpression[callee.name='useEffect'] ArrayExpression > ArrayExpression",
+        "message": "🔥 無限ループ確実: 依存配列に配列リテラル使用禁止！ useMemo(() => [...], [依存値]) を使用してください。"
+      },
+      {
+        "selector": "CallExpression[callee.name='useEffect'] ArrayExpression > ArrowFunctionExpression",
+        "message": "🔥 無限ループ確実: 依存配列に関数リテラル使用禁止！ useCallback(() => {...}, [依存値]) を使用してください。"
+      },
+      {
+        "selector": "CallExpression[callee.name=/^use(Callback|Memo)$/] ArrayExpression > ObjectExpression",
+        "message": "🔥 最適化無効: useCallback/useMemoの依存配列にオブジェクトリテラル使用禁止！ プリミティブ値を使用してください。"
+      }
+    ],
+
+    // 🔴 Next.js固有のルール
+    "@next/next/no-img-element": "error",
+    "@next/next/no-sync-scripts": "error",
+    "@next/next/no-html-link-for-pages": "error",
+
+    // 🟡 97%品質: 実用的な複雑性制御
+    "sonarjs/cognitive-complexity": ["error", 10],
+    "sonarjs/no-duplicate-string": ["error", { "threshold": 4 }],
+    "sonarjs/no-duplicated-branches": "error",
+    "sonarjs/no-identical-expressions": "error",
+    "sonarjs/prefer-immediate-return": "error",
+
+    // 🟡 97%品質: 重要なセキュリティ
+    // detect-object-injectionは制御された値では誤検知が多いため無効化
+    // 実際のユーザー入力を使う場合は手動でレビュー推奨
+    "security/detect-object-injection": "off",
+    "security/detect-unsafe-regex": "error",
+    "security/detect-buffer-noassert": "error",
+    "security/detect-eval-with-expression": "error",
+    "security/detect-non-literal-require": "error",
+    "security/detect-non-literal-fs-filename": "warn",
+    "security/detect-possible-timing-attacks": "warn",
+
+    // 🔴 実行時エラー防止
+    "@typescript-eslint/no-floating-promises": "error",
+    "@typescript-eslint/await-thenable": "error",
+    "@typescript-eslint/no-misused-promises": "error",
+    "@typescript-eslint/require-await": "error",
+
+    // 🔴 null/undefined安全性
+    "@typescript-eslint/no-unnecessary-condition": "warn",
+    "@typescript-eslint/strict-boolean-expressions": [
+      "warn",
+      {
+        "allowString": true,
+        "allowNumber": false,
+        "allowNullableObject": true
+      }
+    ]
+  },
+  "overrides": [
+    {
+      "files": ["*.config.*"],
+      "rules": {
+        "sonarjs/cognitive-complexity": "off"
+      }
+    },
+    {
+      "files": ["scripts/**/*.js", "*.config.js"],
+      "parser": "espree",
+      "rules": {
+        "@typescript-eslint/no-explicit-any": "off",
+        "@typescript-eslint/no-unsafe-assignment": "off",
+        "sonarjs/cognitive-complexity": "off"
+      }
+    },
+    {
+      "files": ["**/*.test.*", "tests/**/*"],
+      "rules": {
+        "sonarjs/no-duplicate-string": "off",
+        "@typescript-eslint/no-unused-vars": "off"
+      }
+    },
+    {
+      "files": ["src/hooks/useInfiniteLoopDetector.ts"],
+      "rules": {
+        "sonarjs/cognitive-complexity": "off",
+        "@typescript-eslint/strict-boolean-expressions": "off"
+      }
+    }
+  ]
+}
