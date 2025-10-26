@@ -1,211 +1,297 @@
-# SuperClaude v4 Production Edition - Enterprise Template
+# Plan C 投資戦略 - 実装パッケージ（月15日買付版）
 
-[![Framework](https://img.shields.io/badge/SuperClaude-v4.0.8-blue)](https://github.com/SuperClaude-Org/SuperClaude_Framework)
-[![Template](https://img.shields.io/badge/Edition-Production-green)](CLAUDE.md)
-[![Architecture](https://img.shields.io/badge/Architecture-Feature--based-orange)](docs/architecture.md)
+## 📊 戦略概要
 
-Claude Code用のエンタープライズグレードNext.jsテンプレート。
-**SuperClaude v4.0.8** + **14専門エージェント** + **フィーチャーベース開発** + **コンテキスト駆動開発**
+**Plan C**: DCAベースライン + 真の暴落時のみ追加投資
 
-## 💡 SuperClaudeの本質
+- 通常時: 月30万円固定（市況に関わらず継続）
+- 暴落時: +30万円追加（合計60万円/月）
+- 買付日: **毎月15日**（約定日16-17日頃）
+- 30年目標: **5.8億円**（税引後5.3億円）
 
-**重要**: SuperClaudeは実行されるソフトウェアではありません。Claude Codeの振る舞いをガイドする**構造化されたコンテキストファイル群**です。
+### 20年バックテスト検証済み
 
-- ✅ **コンテキストファイル**: Claude Code用の`.md`指示ファイル
-- ✅ **行動パターン**: ワークフローとアプローチのガイド
-- ✅ **ドメイン専門知識**: 特化された知識コンテキスト
-- ✅ **MCPサーバー統合**: 実ツールとの設定・ガイダンス
+| プラン | 結果 | vs ベースライン |
+|--------|------|----------------|
+| ベースライン | 1.77億円 | - |
+| Plan A | 1.85億円 | +8百万円 |
+| Plan B | 1.88億円 | +11百万円 |
+| **Plan C** ✅ | **1.95億円** | **+18百万円 (+10.2%)** |
 
-## 🆕 v4 Production Edition の特徴
+**重要な発見**: 2021-2025年の「過大評価期」でもPlan Cは通常投資を継続し、機会損失ゼロを達成。
 
-### 14の専門エージェント
+### 購入日最適化効果
 
-- 🏗️ **system-architect**: スケーラブルなシステム設計
-- 🛡️ **security-engineer**: セキュリティ脆弱性の特定
-- ⚡ **performance-engineer**: パフォーマンス最適化
-- 🎨 **frontend-architect**: アクセシブルなUI設計
-- 🔧 **backend-architect**: 信頼性の高いバックエンド
-- その他9つの専門エージェント
+月15日買付（約定日16日頃）は統計的に最も有利な時期で、月1日買付と比較して30年間で**+500万円**の効果が期待できます。
 
-### /sc: 統一コマンド体系
+---
 
-```bash
-/sc:start          # セッション開始
-/sc:feature        # フィーチャー作成
-/sc:boundaries     # 境界チェック
-/sc:business-panel # ビジネス分析（新機能）
+## 📁 ファイル構成
+
+### 🚀 実装ガイド
+**[月15日買付_実装ガイド.md](./月15日買付_実装ガイド.md)** ⭐ 最初に読む
+- **所要時間**: 30分（初回設定）
+- **実行日**: 毎月14日にチェック、15日に自動買付
+- **内容**: 固定積立300k円 + 暴落月のみ手動追加300k円
+- **対象**: Plan C採用を決めた人が最初に読むファイル
+
+### 📊 記録ツール
+**[Plan_C_Investment_Tracker.csv](./Plan_C_Investment_Tracker.csv)**
+- **形式**: Google Sheets インポート用CSV
+- **内容**: 5つのシート（月次記録、資金管理、チェックリスト、シミュレーション、ポートフォリオ）
+- **使い方**: Google Sheetsでインポート → 毎月更新
+
+### 📖 詳細ガイド
+**[Plan_C_実装ガイド.md](./Plan_C_実装ガイド.md)**
+- **ページ数**: 約50ページ相当
+- **内容**: 戦略の全詳細（暴落定義、資金管理、ポートフォリオ、FAQ、リスク管理）
+- **対象**: 疑問が出た時の参照用
+
+### 🤖 自動化オプション
+**[自動化アプリ設計.md](./自動化アプリ設計.md)**
+- **内容**: VIX・株価自動取得アプリ（Phase 1-3）
+- **対象**: 将来的に作業を自動化したい場合
+
+**[バフェット指数自動取得_技術分析.md](./バフェット指数自動取得_技術分析.md)**
+- **内容**: バフェット指数の自動取得方法（Playwright実装）
+- **対象**: 完全自動化を検討する場合
+
+---
+
+## 🎯 クイックスタート（30分で開始）
+
+### ステップ1: 暴落用資金を準備（5分）
+```
+□ 300万円を確保
+□ SBI証券のMRFに入金
 ```
 
-### 6つの適応モード
-
-- **Business Panel** 🆕: 戦略的ビジネス分析
-- **Brainstorming**: 要件探索
-- **Orchestration**: 並列実行最適化
-- **Token-Efficiency**: 30-50%トークン削減
-- **Task Management**: 体系的タスク管理
-- **Introspection**: メタ認知分析
-
-## 📖 セットアップガイド
-
-詳細なセットアップ手順は **[SETUP_GUIDE.md](./SETUP_GUIDE.md)** を参照してください。
-
-## 🚀 Quick Start
-
-```bash
-# Clone the repository
-git clone [your-repo-url] my-app
-cd my-app
-
-# Run complete setup (dependencies + configuration)
-pnpm setup:project
-
-# Start development
-pnpm dev
+### ステップ2: SBI証券で自動積立設定（15分）
+```
+□ つみたてNISA口座を確認
+□ 月30万円の自動買付を設定
+  - eMAXIS Slim 7ファンド
+  - 毎月15日実行 ← 重要
 ```
 
-### 🔧 Git Hooksの自動設定
-
-このテンプレートは**最初から機能するGit Hooks**を提供します：
-
-- **postinstall時**: `pnpm install`実行時にgit hooksへ自動的に実行権限付与
-- **pre-commit**: 境界違反チェック + 複数フィーチャー同時コミット防止
-- **commit-msg**: コミットメッセージの標準化強制
-
-新規プロジェクトでも即座に境界保護が有効になります。
-
-> 💡 `pnpm setup:project`は依存関係のインストールも自動で行います
-
-## 📋 Features
-
-- ⚡ **Next.js 14.2.31** with App Router
-- 🎨 **Tailwind CSS** with 11 UI design styles (Neumorphism, Glassmorphism, Cyberpunk, etc.)
-- 📁 **Feature-based architecture** with boundary enforcement
-- 🤖 **SuperClaude integration** for maximum AI development power
-- 🧪 **Complete testing** - Playwright E2E + Vitest unit tests
-- 📊 **Supabase ready** with MCP server support
-- 🔒 **Security-first** with automated vulnerability fixes
-- 🎯 **CI/CD Pipeline** with GitHub Actions
-- 🎨 **UI Showcase** at `/ui-demo` with all design styles
-
-## 🏗️ Project Structure
-
+### ステップ3: 記録システムをセットアップ（10分）
 ```
-src/
-├── app/          # Next.js App Router
-├── features/     # Feature-based modules
-├── components/   # Shared components
-└── styles/       # Global styles
+□ Google SheetsにCSVをインポート
+□ ブックマーク作成（VIX、バフェット指数、株価）
+□ カレンダーアラート設定（毎月14日 10:00）
 ```
 
-## 🧪 テストとカバレッジ
+**詳細**: [月15日買付_実装ガイド.md](./月15日買付_実装ガイド.md)
 
-### テストコマンド
+---
 
-```bash
-pnpm test              # ユニットテスト実行
-pnpm test:watch        # ウォッチモード
-pnpm test:coverage     # カバレッジ測定（90%閾値）
-pnpm test:e2e          # Playwright E2Eテスト
-pnpm test:regression   # 回帰テスト
+## 💰 暴落の定義（3条件すべて該当で追加投資）
+
+### 条件1: VIX > 30
+- 市場のパニック状態
+- データ: https://finance.yahoo.co.jp/quote/%5EVIX
+
+### 条件2: バフェット指数平均 < 80%
+- 株価が実体経済に対して割安
+- データ: https://nikkeiyosoku.com/buffett/ （日本）
+- データ: https://nikkeiyosoku.com/buffett_us/ （米国）
+
+### 条件3: 株価下落 ≧ 20%（3ヶ月前比）
+- 日経平均 OR S&P500（いずれか）
+- 明確なトレンド転換
+
+### 過去20年の実績（2005-2025）
+- **リーマンショック（2008-2009）**: ✅ 7ヶ月間追加投資
+- **COVID-19（2020/03）**: ✗ バフェット107.5%でフィルタリング（正しい判断）
+- **2024調整（2024/08）**: ✗ 株価-12%のみで不十分
+
+---
+
+## 📈 ポートフォリオ配分
+
+### 通常時（300,000円/月）
+
+| カテゴリ | 金額 | 比率 | ファンド |
+|---------|------|------|---------|
+| 日本株式 | 45,000円 | 15% | eMAXIS Slim 国内株式（TOPIX） |
+| 日本REIT | 30,000円 | 10% | eMAXIS Slim 国内リート |
+| 日本債券 | 15,000円 | 5% | eMAXIS Slim 国内債券 |
+| グローバル株式 | 120,000円 | 40% | eMAXIS Slim 全世界株式（除く日本） |
+| 米国株式 | 45,000円 | 15% | eMAXIS Slim 米国株式（S&P500） |
+| 先進国REIT | 30,000円 | 10% | eMAXIS Slim 先進国リート |
+| 先進国債券 | 15,000円 | 5% | eMAXIS Slim 先進国債券 |
+
+### 暴落時（600,000円/月）
+すべて2倍
+
+### 資産配分
+- **日本30% / 海外70%**
+- **株式70% / REIT20% / 債券10%**
+
+---
+
+## 📅 月次作業フロー（所要時間: 1-10分）
+
+### 毎月14日の作業
+
+```
+【通常月（年10ヶ月）】
+1. 指標チェック（5分）
+   - VIX、バフェット指数、株価変動率
+   ↓
+2. 判定 → FALSE（通常月）
+   ↓
+3. 作業完了（何もしない）
+   ↓
+4. 翌日15日に自動で300k円買付
+
+所要時間: 5分
+
+【暴落月（年2-3ヶ月）】
+1. 指標チェック（5分）
+   ↓
+2. 判定 → TRUE（暴落月）
+   ↓
+3. SBI証券で追加300k円を手動買付（5分）
+   ↓
+4. 記録（2分）
+   ↓
+5. 翌日15日に自動300k円 + 手動300k円 = 合計600k円
+
+所要時間: 12分
 ```
 
-### カバレッジレポート
+**詳細**: [月15日買付_実装ガイド.md](./月15日買付_実装ガイド.md)
 
-```bash
-# HTMLレポートの生成と表示
-pnpm test:coverage:ui
+---
+
+## 🎯 30年後の目標
+
+### 投資額
+```
+通常投資: 108,000,000円 (30万円 × 12ヶ月 × 30年)
+暴落追加: 3,000,000円 (リーマン級2回想定)
+合計: 111,000,000円
 ```
 
-## 📊 Bundle分析
+### 想定リターン
 
-```bash
-# Bundle分析レポートの生成
-pnpm build:analyze
+| シナリオ | 年率 | 30年後資産 | 税引後 |
+|---------|------|-----------|-------|
+| 保守的 | 7.0% | 4.8億円 | 4.3億円 |
+| 現実的 | 7.5% | 5.3億円 | 4.8億円 |
+| **Plan C効果** | **8.0%** | **5.8億円** | **5.3億円** |
 
-# 最適化の機会を自動的に可視化
-```
+**Plan C効果**: +6,000万円（+11.5%）
+**購入日最適化**: +500万円（月15日 vs 月1日）
+**合計効果**: +6,500万円
 
-## 🌍 国際化（i18n）
+---
 
-### 対応言語
+## ⚠️ リスク管理
 
-- 🇯🇵 日本語（デフォルト）
-- 🇺🇸 英語
+### よくある質問
 
-### 使用方法
+**Q1: 30年間で暴落が1回も来なかったら？**
+- A: 問題なし。通常投資のみで5.2億円達成。暴落用資金1,200万円も活用可能。
 
-```typescript
-import { useI18n } from '@/hooks/useI18n'
+**Q2: 暴落用資金を使い切ったら？**
+- A: 通常の300k円投資は絶対に継続。追加投資は余裕がある範囲で実施。
 
-function Component() {
-  const { locale, t, setLocale } = useI18n()
-  return <button>{t('common.actions.save')}</button>
-}
-```
+**Q3: 市場が急騰している場合は減額すべき？**
+- A: **NO**。Plan Cは通常300k固定。2021-2025の例: バフェット200%超でも市場上昇継続。
 
-## 📦 Claude Code専用コマンド
+**Q4: バフェット指数が信頼できなくなったら？**
+- A: CAPE Ratio（シラーPE）を代替として使用。基準は同じく80%以下。
 
-### Claude Code実装フロー
+**Q5: 作業を忘れた場合は？**
+- A: 気づいた時点で実施。1-2日の遅れは問題なし。
 
-```bash
-pnpm claude:start      # 実装開始（状態確認）
-pnpm claude:implement  # フィーチャー作成
-pnpm claude:validate   # 実装検証
-pnpm claude:complete   # 完了確認
-```
+---
 
-### 自動化コマンド
+## 🛠 将来のアプリ開発（参考）
 
-- `pnpm create:feature [name]` - フィーチャー自動生成（手動作成禁止）
-- `pnpm check:boundaries` - 境界違反検出
-- `pnpm fix:boundaries` - 違反自動修正
-- `pnpm validate:all` - 全検証実行（完了条件）
+### Phase 1: 準自動化Webアプリ（推奨）
+- VIX・株価を自動取得
+- バフェット指数のみ手動入力（月1回、1分）
+- 自動判定＋結果表示
+- **実装時間**: 1時間（Streamlit使用）
 
-### 開発コマンド
+### Phase 2: 自動通知機能
+- GitHub Actionsで毎月14日10:00に自動実行
+- LINE/メール/Slackで通知
+- **実装時間**: +2時間
 
-- `pnpm dev` - 開発サーバー起動
-- `pnpm build` - プロダクションビルド
-- `pnpm test` - テスト実行
-- `pnpm typecheck` - 型チェック
+### Phase 3: 完全自動化（バフェット指数も自動）
+- Playwrightでバフェット指数を自動取得
+- 完全無人実行
+- **実装時間**: +3時間
 
-## 🤖 Claude Code Integration
+**現時点では不要**: 手動でも月1-5分で完結。余裕ができてから。
 
-1. Install [Claude Code GitHub App](https://github.com/apps/claude-code)
-2. Add `CLAUDE_CODE_OAUTH_TOKEN` to repository secrets
-3. Create issues with `@claude` to trigger automated implementation
+**詳細**: [自動化アプリ設計.md](./自動化アプリ設計.md)
 
-## 🔧 MCP (Model Context Protocol) サーバー設定
+---
 
-SuperClaude v4.0.8の6つのMCPサーバーを活用するための設定：
+## 📚 関連資料
 
-### Quick Setup（推奨）
+### 研究論文・資料
+- Kirkby, Mitra & Nguyen (2020): "Market Timing with Moving Averages"
+- Morgan Stanley (2024): "Two problems with Buffett Indicator"
+- Vanguard (2023): "Dollar-cost averaging vs. lump-sum investing"
+- 日経新聞（2018）: "月初の株高と投信積立のベストタイミング"
 
-```bash
-# MCPサーバーの接続状態を確認
-claude mcp list  # 5つのMCPが利用可能
+### データソース
+- [VIX Index](https://finance.yahoo.co.jp/quote/%5EVIX)
+- [日本バフェット指数](https://nikkeiyosoku.com/buffett/)
+- [米国バフェット指数](https://nikkeiyosoku.com/buffett_us/)
+- [Yahoo Finance 日経平均](https://finance.yahoo.co.jp/quote/998407.O)
+- [Yahoo Finance S&P500](https://finance.yahoo.co.jp/quote/%5EGSPC)
 
-# Magic MCP（UIコンポーネント生成）- 現在利用不可
-# 設定は可能ですが、Claude Codeのツールとして統合されていません（2025-09-02時点）
-# UI開発にはfrontend-architectエージェントを使用してください
-```
+### オリジナル計画（参考）
+- **月30万円・バフェット理論完全版プラン.pdf**: 当初の計画書（問題点を修正済み）
 
-### Supabase MCP（オプション）
+---
 
-```bash
-# Supabaseデータベース操作用（プロジェクトで使用する場合）
-claude mcp add supabase \
-  -e SUPABASE_ACCESS_TOKEN=your_token_here \
-  -- npx -y @supabase/mcp-server-supabase@latest
-```
+## ✅ 成功の基準
 
-**注意**: MCPサーバー設定は開発環境側の設定で、各開発者が個別に設定します。
+### 短期（1年後）
+- [ ] 12回の月次投資を継続（毎月15日買付）
+- [ ] スプレッドシート記録が完全
+- [ ] 暴落用資金に年次30万円を追加
 
-詳細設定は [MCP Setup Guide](docs/MCP_SETUP.md) を参照。
+### 中期（10年後）
+- [ ] 累積投資額: 3,690万円
+- [ ] 想定資産額: 5,400万円
+- [ ] 暴落時の適切な追加投資実行
 
-## 📄 License
+### 長期（30年後）
+- [ ] 累積投資額: 1億1,100万円
+- [ ] 目標資産額: 5.8億円達成
+- [ ] 税引後5.3億円で経済的自由を獲得
 
-MIT License
+---
 
-## 🤝 Contributing
+## 🚀 今すぐ始めよう
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+1. **[月15日買付_実装ガイド.md](./月15日買付_実装ガイド.md)** を読む（10分）
+2. 暴落用資金300万円を準備
+3. SBI証券で自動積立設定（毎月15日）
+4. 来月14日から月次作業を開始
+
+**30年後、この決断が人生を変えています。**
+
+---
+
+## 📝 プロジェクト情報
+
+- **作成日**: 2025年
+- **バージョン**: 2.0（月15日買付版）
+- **検証期間**: 2005-2025（20年バックテスト）
+- **対象**: 日本在住の長期投資家
+- **プラットフォーム**: SBI証券 + つみたてNISA
+- **買付日**: 毎月15日（約定日16-17日）
+
+---
+
+**免責事項**: この戦略は過去のデータに基づくシミュレーションです。将来のリターンを保証するものではありません。投資判断は自己責任でお願いします。
