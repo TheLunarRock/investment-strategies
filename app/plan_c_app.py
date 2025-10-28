@@ -8,6 +8,7 @@ import streamlit as st
 import yfinance as yf
 from datetime import datetime, timedelta
 import pandas as pd
+import requests
 
 # ページ設定
 st.set_page_config(
@@ -15,6 +16,39 @@ st.set_page_config(
     page_icon="📊",
     layout="wide"
 )
+
+# ===== LINE Notify送信関数 =====
+def send_line_notify(message):
+    """
+    LINE Notifyでメッセージを送信
+
+    Parameters:
+    -----------
+    message : str
+        送信するメッセージ
+
+    Returns:
+    --------
+    bool : 送信成功ならTrue、失敗ならFalse
+    """
+    try:
+        # Streamlit Secretsからトークンを取得
+        if "line_notify_token" not in st.secrets:
+            return False
+
+        line_token = st.secrets["line_notify_token"]
+
+        # LINE Notify API
+        url = "https://notify-api.line.me/api/notify"
+        headers = {"Authorization": f"Bearer {line_token}"}
+        data = {"message": message}
+
+        response = requests.post(url, headers=headers, data=data)
+
+        return response.status_code == 200
+    except Exception as e:
+        st.error(f"LINE通知エラー: {str(e)}")
+        return False
 
 # タイトル
 st.title("📊 Plan C 暴落判定アプリ（日米別判定版）")
@@ -1299,6 +1333,52 @@ if current_jp > 0 or current_os > 0:
                         st.write(f"- {detail}")
         else:
             st.success("✅ バランスが良好なため、通常の配分で投資してください。")
+
+# ===== LINE通知セクション =====
+st.markdown("---")
+st.subheader("📱 LINE通知")
+
+# LINE Notifyトークンが設定されているかチェック
+if "line_notify_token" in st.secrets:
+    st.info("✅ LINE Notifyが設定されています")
+
+    if st.button("📤 判定結果をLINEに送信", type="primary"):
+        # 判定結果メッセージを生成
+        message = f"""
+📊 Plan C 暴落判定結果
+判定日: {today}
+
+【市場状況】
+VIX指数: {vix_value:.2f}
+日本市場: {"🚨 暴落" if jp_crash else "✅ 通常"}
+米国市場: {"🚨 暴落" if us_crash else "✅ 通常"}
+
+【最終判定】
+"""
+        if not jp_crash and not us_crash:
+            message += f"✅ 両市場とも通常\n追加投資: なし\n15日の自動買付: {base_amount:,}円"
+        elif jp_crash and not us_crash:
+            message += f"🚨 日本市場のみ暴落\n追加投資: 日本資産に+{crash_fund_jp:,}円\n合計: {base_amount + crash_fund_jp:,}円"
+        elif not jp_crash and us_crash:
+            message += f"🚨 米国市場のみ暴落\n追加投資: 海外資産に+{crash_fund_os:,}円\n合計: {base_amount + crash_fund_os:,}円"
+        else:
+            message += f"🚨 両市場とも暴落\n追加投資: 全資産に+{base_amount:,}円\n合計: {base_amount * 2:,}円"
+
+        # LINE通知を送信
+        with st.spinner("LINEに送信中..."):
+            if send_line_notify(message):
+                st.success("✅ LINEに送信しました！")
+            else:
+                st.error("❌ LINE送信に失敗しました")
+
+else:
+    st.warning("⚠️ LINE Notifyが設定されていません")
+    st.markdown("""
+    LINE通知を有効にするには：
+    1. [LINE Notify](https://notify-bot.line.me/)でトークンを取得
+    2. Streamlit Community Cloudの「Settings」→「Secrets」で設定
+    3. `line_notify_token = "your_token_here"`を追加
+    """)
 
 # フッター
 st.markdown("---")
