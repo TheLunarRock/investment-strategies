@@ -1341,10 +1341,12 @@ st.subheader("📱 Discord通知")
 if "discord_webhook_url" in st.secrets:
     st.info("✅ Discord通知が設定されています")
 
-    if st.button("📤 判定結果をDiscordに送信", type="primary"):
-        # 判定結果メッセージを生成
-        message = f"""
-📊 **Plan C 暴落判定結果**
+    # セッション状態の初期化（重複送信防止用）
+    if "last_sent_message" not in st.session_state:
+        st.session_state.last_sent_message = None
+
+    # 判定結果メッセージを生成
+    message = f"""📊 **Plan C 暴落判定結果**
 判定日: {today}
 
 **【市場状況】**
@@ -1354,21 +1356,27 @@ VIX指数: {vix_value:.2f}
 
 **【最終判定】**
 """
-        if not jp_crash and not us_crash:
-            message += f"✅ 両市場とも通常\n追加投資: なし\n15日の自動買付: {base_amount:,}円"
-        elif jp_crash and not us_crash:
-            message += f"🚨 日本市場のみ暴落\n追加投資: 日本資産に+{crash_fund_jp:,}円\n合計: {base_amount + crash_fund_jp:,}円"
-        elif not jp_crash and us_crash:
-            message += f"🚨 米国市場のみ暴落\n追加投資: 海外資産に+{crash_fund_os:,}円\n合計: {base_amount + crash_fund_os:,}円"
-        else:
-            message += f"🚨 両市場とも暴落\n追加投資: 全資産に+{base_amount:,}円\n合計: {base_amount * 2:,}円"
+    if not jp_crash and not us_crash:
+        message += f"✅ 両市場とも通常\n追加投資: なし\n15日の自動買付: {base_amount:,}円"
+    elif jp_crash and not us_crash:
+        message += f"🚨 日本市場のみ暴落\n追加投資: 日本資産に+{crash_fund_jp:,}円\n合計: {base_amount + crash_fund_jp:,}円"
+    elif not jp_crash and us_crash:
+        message += f"🚨 米国市場のみ暴落\n追加投資: 海外資産に+{crash_fund_os:,}円\n合計: {base_amount + crash_fund_os:,}円"
+    else:
+        message += f"🚨 両市場とも暴落\n追加投資: 全資産に+{base_amount:,}円\n合計: {base_amount * 2:,}円"
 
-        # Discord通知を送信
-        with st.spinner("Discordに送信中..."):
-            if send_discord_notification(message):
-                st.success("✅ Discordに送信しました！")
-            else:
-                st.error("❌ Discord送信に失敗しました")
+    if st.button("📤 判定結果をDiscordに送信", type="primary"):
+        # 同じメッセージの重複送信を防止
+        if st.session_state.last_sent_message == message:
+            st.warning("⚠️ 同じ内容を既に送信済みです。設定を変更してから再送信してください。")
+        else:
+            # Discord通知を送信
+            with st.spinner("Discordに送信中..."):
+                if send_discord_notification(message):
+                    st.session_state.last_sent_message = message
+                    st.success("✅ Discordに送信しました！")
+                else:
+                    st.error("❌ Discord送信に失敗しました")
 
 else:
     st.warning("⚠️ Discord通知が設定されていません")
